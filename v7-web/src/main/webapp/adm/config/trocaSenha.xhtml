@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resources/css/cssLogin.css" media="screen" /> 
+        <title>OZELO Automóveis | Sist. Administrativo - Troca de Senha</title>
+    </h:head>
+    <h:body class="body">
+        <h:form>
+            <p:messages id="messages" autoUpdate="true" showDetail="true"/>
+          <p:panelGrid columns="2" id="matchGrid" styleClass="primeGrid" >  
+                  <f:facet name="header">
+            <p:column colspan="2">Troca de Senha</p:column>
+        </f:facet>
+        <h:outputText value="Apelido do Operador:" />
+        <p:inputText id="operadorApelido" disabled="true" value="#{operadorMB.operadorLogado.apelido}"  />
+     <h:outputText value="Senha Atual:" rendered="#{operadorMB.isIsEditar() eq false}" />
+     <p:password id="pwdAtual" rendered="#{operadorMB.isIsEditar() eq false}" value="#{operadorMB.password}" required="true" />
+        <p:outputLabel value=" "/><p:outputLabel value=" "/>
+        <h:outputLabel for="pwd1" value="Nova Senha:" />
+        <p:password id="pwd1" value="#{operadorMB.newPassword}" match="pwd2" required="true" feedback="true" maxlength="20" strongLabel="Forte" weakLabel="Fraca" goodLabel="Boa"
+ promptLabel="Entre com a Nova Senha (máx. 20 caracteres)" requiredMessage="Insira a Nova Senha" validatorMessage="Nova Senha Não Confere!"/>
+        <h:outputLabel for="pwd2" value="Confirmar Senha:" />
+        <p:password id="pwd2" value="#{operadorMB.newPassword}" required="true" />
+        <p:commandButton id="btConfirme" value="Confirma" action="#{operadorMB.trocaSenha()}" update="pwd1,pwd2,pwdAtual"/>
+        <p:commandButton id="btCancel" value ="Cancela" action="/login.faces?faces-redirect=true" immediate="true" />
+    </p:panelGrid>
+          
+         
+         
+         
+        </h:form>
+    </h:body>
+</html>
+

@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resources/css/cssLogin.css" media="screen"/> 
+        <title>OZELO Automóveis | Sistema Administrativo</title>
+    </h:head>
+    <h:body>
+<div>
+                    <center>
+                       <h:form>
+                        <h:panelGrid id="central" columns="1">
+                               <h:graphicImage value="/resources/img/logoCentral.png" class="icon"/>
+                            <h:inputText styleClass= "operadorNome" alt="Informe o Apelido do Operador do Sistema" value="#{operadorMB.apelido}" />
+                            <h:inputSecret class="passwordOperador" alt="Informe a Senha" value="#{operadorMB.password}"/>
+                            <br/>
+                            <p:messages id="messages" showDetail="true" autoUpdate="true" />
+                        <h:commandButton class="button"  action="#{operadorMB.doLogin()}" value="Entrar"/>
+                           </h:panelGrid>
+                        </h:form>
+                    </center>
+</div>
+    </h:body>
+</html>
+

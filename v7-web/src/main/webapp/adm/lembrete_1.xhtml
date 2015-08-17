@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./baseFace.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ozeloComp="http://xmlns.jcp.org/jsf/composite/componentes">
+    
+    <ui:define name="conteudo">
+
+        <h:form>
+ <p:commandLink   action="#{lembreteMB.novoLembrete()}" oncomplete="PF('novoLembreteDialog').show();"   >
+          <h:graphicImage value="/resources/img/lembrete/novoLembrete.png" class="buttonRedondo" />
+        </p:commandLink>
+            <p:dataGrid id="lembreteTable" var="lembrete" value="#{lembreteMB.lembretes}" columns="4"
+                 class="lembreteGrid" emptyMessage="Nenhum Lembrete para Você!" >
+ 
+             <p:panel style="text-align:center" class="lembrete" style="background-color: #{lembrete.backColor}">
+            <h:panelGroup>
+                <ozeloComp:alertaLembrete valueAlert="#{lembrete.nivel}" style="float: left;"/>
+                <h:outputLabel value="#{lembrete.dataEventoPTBR}" style="float: right">
+                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+3"/>
+                </h:outputLabel>
+            </h:panelGroup>
+              
+                <h:outputText value="#{lembrete.descricao}" style="width: 95%; height: 160px;"/>
+ 
+             </p:panel>
+ 
+    </p:dataGrid>
+            
+            
+            
+          
+    </h:form>          
+    <h:form>
+    <p:dialog id="formLembrete" widgetVar="novoLembreteDialog" header="Novo Lembrete" resizable="false"
+                      dynamic="true" showEffect="clip" hideEffect="clip"  >
+         <p:messages id="lembretePanel" />
+                <h:panelGrid columns="1" >
+          <h:panelGroup>
+          <ozeloComp:alertaLembrete valueAlert="#{lembreteMB.lembreteSelecionado.nivel}" id="nivelImg" onClick="#{lembreteMB.changeNivel()}"
+                                    style="float: left;"/>
+        <h:panelGroup style="float: right">
+            <h:outputLabel for ="inputCor" value="Cor: "/>
+        <h:selectOneMenu id="inputCor" value="#{lembreteMB.lembreteSelecionado.cor}"  > 
+            <p:ajax event="change" update="textoLembrete" listener="#{lembreteMB.changeColor()}" />
+            <f:converter converterId="IntegerConversor"/>
+            <f:selectItem itemValue="1" itemLabel=" HighLight" />
+            <f:selectItem itemValue="2" itemLabel=" Azul" />
+            <f:selectItem itemValue="3" itemLabel=" Verde"/>
+            <f:selectItem itemValue="4" itemLabel=" Rosa" />
+            <f:selectItem itemValue="5" itemLabel=" Laranja" />
+         </h:selectOneMenu>
+        </h:panelGroup>
+        </h:panelGroup>
+        <h:panelGroup>
+        <h:outputLabel for="inputOper" value="Lembrar para: " />
+        <p:selectOneMenu id="inputOper" value="#{lembreteMB.lembreteSelecionado.operador}" converter="OperadorApelidoConverter" > 
+            <f:selectItems value="#{lembreteMB.operadorMB.operadoresApelidos}" var="operador"  itemLabel="#{operador.apelido}" itemValue="#{operador}" itemDescription="#{operador.apelido}" />
+        </p:selectOneMenu>
+        </h:panelGroup>           
+        <p:inputTextarea id="textoLembrete" value="#{lembreteMB.lembreteSelecionado.descricao}" cols="45" rows="10"
+                         label="Texto" style="font-size: large; background-color: #{lembreteMB.corFundo}" required="true" />
+<p:commandLink action="#{lembreteMB.addLembrete()}" update="lembretePanel" oncomplete="existeErro(args)" style="float: left;" >
+    <h:graphicImage url="/resources/img/lembrete/pinOk.png" class="buttonRedondo" />
+</p:commandLink>
+                </h:panelGrid>  
+    </p:dialog>    
+        </h:form>
+         
+    </ui:define>
+<script>        
+            function existeErro(args) {
+		if (!args.validationFailed) {
+			novoLembreteDialog.hide();
+		}
+	}
+	
+</script>  
+</ui:composition>
+  
+    
+    

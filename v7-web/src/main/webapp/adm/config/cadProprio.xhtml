@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./baseFace.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    
+    <ui:define name="conteudo">
+        <h:form>
+        <p:panelGrid columns="2" >
+            <f:facet name="header">Cadastro Próprio</f:facet>
+            <p:outputLabel for="id" value="Id:"/>
+            <p:outputLabel id="id" value="#{operadorMB.operadorLogado.id}"/>
+            <p:outputLabel for="apelido" value="Apelido:"/>
+            <p:inputText id="apelido" disabled="true" value="#{operadorMB.operadorLogado.apelido}"/>
+            <p:outputLabel for="nome" value="Nome:"/>
+            <p:inputText id="nome" disabled="true" value="#{operadorMB.operadorLogado.nome}"/>
+            <p:outputLabel for="nrAcesso" value="Nº Acessos:"/>
+            <p:outputLabel id="nrAcesso" value="#{operadorMB.operadorLogado.nrAcessos}"/>
+            <p:outputLabel for="ulAcesso" value="Último Acesso:"/>
+            <p:outputLabel id="ulAcesso" value="#{operadorMB.operadorLogado.dtUltAcesso}">
+              <f:convertDateTime locale="pt" dateStyle="long" pattern="dd/MM/yyyy  HH:mm" /></p:outputLabel>
+            <p:outputLabel value=""/> <p:outputLabel value=""/>
+            <p:outputLabel for="dtNasc" value="Dt.Nascimento:"/>
+            <p:calendar id="dtNasc" locale="pt_BR" navigator="true" pattern="dd/MM/YYYY" value="#{operadorMB.operadorLogado.dtNasc}"/>
+            <p:outputLabel for="sexo" value="Sexo:"/>
+                <p:selectOneRadio id="sexo" value="#{operadorMB.operadorLogado.sexo}">
+                  <f:selectItem itemLabel="Fem." itemValue="F" />
+                  <f:selectItem itemLabel="Masc." itemValue="M" />
+                </p:selectOneRadio>         
+            <p:outputLabel for="email" value="e-Mail:"/>
+            <p:inputText id="email" value="#{operadorMB.operadorLogado.email}"/>
+            <p:commandButton value="Trocar a Senha" action="/adm/config/trocaSenha.faces?faces-redirect=true"/><p:outputLabel value=""/>
+            <f:facet name="footer" >
+            <p:commandButton value="Confirma Edição" action="#{operadorMB.editaProprio}"/>
+            <p:commandButton value="Cancela Edição" action="/adm/index.faces?faces-redirect=true" immediate="true"/>
+            </f:facet>       
+        </p:panelGrid>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

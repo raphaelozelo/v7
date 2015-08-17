@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../../baseFace.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="conteudo">
+        <h:form>
+            <p:growl id="growl" showDetail="true" sticky="true" /> 
+            <p:tabView style="width: 65%">
+        <p:tab title="Ativos">
+            <p:dataTable id="operadorDT" var="operador" value="#{operadorMB.operadoresAtivos}" 
+                         selectionMode="single" resizableColumns="true" selection="#{operadorMB.operadorSelecionado}" rowKey="#{operador.id}" >
+                <p:ajax event="rowSelect" update="viewBT,viewLogBT,newSenhaBT,desativarBT, demitirBT" />
+        <f:facet name="header">
+           <h:outputLabel class="formHeader" value="Lista de Operadores ATIVOS"/>
+        </f:facet>
+                 <p:column headerText="Id" width="3%">
+            <h:outputText value="#{operador.id}" />
+        </p:column>
+                 <p:column headerText="Apelido" width="18%">
+            <h:outputText value="#{operador.apelido}" />
+        </p:column>
+                 <p:column headerText="Nome" width="45%">
+            <h:outputText value="#{operador.nome}" />
+        </p:column>
+                 <p:column headerText="Função" width="10%">
+            <h:outputText value="#{operador.funcao}" />
+        </p:column>
+                 <p:column headerText="Nível" width="2%">
+            <h:outputText value="#{operador.nivel}" />
+        </p:column>
+                 <p:column headerText="Nº Aces." width="4%">
+            <h:outputText value="#{operador.nrAcessos}" />
+        </p:column>
+                 <p:column headerText="Último Acesso" width="10%">
+                     <h:outputText value="#{operador.dtUltAcesso}" >
+                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />  
+                     </h:outputText>
+        </p:column>
+                <f:facet name="footer" id="botoes">
+            <p:commandButton id="viewBT"  value="Visualizar" disabled="#{(operadorMB.operadorSelecionado) eq null }" action="#{operadorMB.doEditarAtivo()}" />
+            <p:commandButton id="viewLogBT" value="Auditoria" disabled="#{(operadorMB.operadorSelecionado) eq null }"/>
+            <p:commandButton id="newSenhaBT" value="Gerar Nova Senha" disabled="#{(operadorMB.operadorSelecionado) eq null }" onclick="return confirm('Têm Certeza Que Deseja GERAR NOVA SENHA Para Este Operador?');"
+                             action="#{operadorMB.gerarNovaSenha(operadorMB.operadorSelecionado)}"/>
+            <p:commandButton id="desativarBT"  value="Desativar" disabled="#{(operadorMB.operadorSelecionado eq null) or (operadorMB.operadorLogado.id eq operadorMB.operadorSelecionado.id)}"
+                             onclick="return confirm('Têm Certeza Que Deseja DESATIVAR Este Operador?');" action="#{operadorMB.changeAtivo(operadorMB.operadorSelecionado)}"/>
+            <p:commandButton id="demitirBT" value="Demitir" disabled="#{(operadorMB.operadorSelecionado eq null) or (operadorMB.operadorLogado.id eq operadorMB.operadorSelecionado.id)}"
+                             onclick="return confirm('Você Têm Absoluta Certeza Que Deseja DEMITIR Este Operador?');" action="#{operadorMB.doDemitir(operadorMB.operadorSelecionado)}"/>
+        </f:facet>
+    </p:dataTable>  
+            <p:commandButton id="newBT" value="Novo Operador" icon="ui-icon-circle-plus" action="#{operadorMB.doNovoOperador()}" />
+        </p:tab>
+        <p:tab title="Inativos">
+            <p:dataTable id="operadoresInativosDT" var="operador" value="#{operadorMB.operadoresInativos}" resizableColumns="true" selectionMode="single" selection="#{operadorMB.operadorSelecionadoInativo}" rowKey="#{operador.id}">
+              <p:ajax event="rowSelect" update="viewBT2,viewLogBT2,ativarBT2, demitirBT2" />        
+        <f:facet name="header">
+           <h:outputLabel class="formHeader" value="Lista de Operadores INATIVOS"/>
+        </f:facet>
+                <p:column headerText="Id" width="3%">
+            <h:outputText value="#{operador.id}" />
+        </p:column>
+                <p:column headerText="Apelido" width="12%">
+            <h:outputText value="#{operador.apelido}" />
+        </p:column>
+        <p:column headerText="Nome" width="45%">
+            <h:outputText value="#{operador.nome}" />
+        </p:column>
+        <p:column headerText="Função" width="10%">
+            <h:outputText value="#{operador.funcao}" />
+        </p:column>
+        <p:column headerText="Dt.Desativação" width="20%">
+            <h:outputText value="#{operador.dtDesativacao}">
+                <f:convertDateTime locale="pt" dateStyle="long" pattern="dd/MM/yyyy"/></h:outputText>  
+        </p:column>
+        <p:column headerText="Demitido" width="3%">
+            <h:graphicImage rendered="#{operador.demitido eq true}" value="/resources/img/icon/demitido.jpg"/>
+        </p:column>
+                <f:facet name="footer">
+                    <p:commandButton id="viewBT2"  value="Visualizar" action="#{operadorMB.doViewDemitido}" disabled="#{(operadorMB.operadorSelecionadoInativo) eq null }" />
+            <p:commandButton id="viewLogBT2" value="Auditoria" disabled="#{(operadorMB.operadorSelecionadoInativo) eq null }"/>
+            <p:commandButton id="ativarBT2"  value="Re-Ativar" disabled="#{(operadorMB.operadorSelecionadoInativo eq null) or (operadorMB.operadorSelecionadoInativo.demitido eq true)}"
+                            onclick="return confirm('Você Têm Certeza Que Deseja RE-ATIVAR Este Operador Para Acessar o Sistema?');" action="#{operadorMB.changeAtivo(operadorMB.operadorSelecionadoInativo)}"/>
+            <p:commandButton id="demitirBT2" value="Demitir" disabled="#{(operadorMB.operadorSelecionadoInativo eq null) or (operadorMB.operadorSelecionadoInativo.demitido eq true)}"
+                             onclick="return confirm('Você Têm Absoluta Certeza Que Deseja DEMITIR Este Operador?');" action="#{operadorMB.doDemitir(operadorMB.operadorSelecionadoInativo)}"/>
+        </f:facet>
+    </p:dataTable>  
+                    
+                    
+                    
+                    
+                    
+                    
+        </p:tab>
+        </p:tabView>  
+            <p:dialog id="dialogDemitido" widgetVar="dialogDemitido" >
+                 <p:panelGrid columns="4" class="primeGrid" style="width: 50%" >
+                 <f:facet name="header"><h:outputLabel class="formHeader" value="Cadastro de Operador Demitido"/></f:facet>
+           <h:outputLabel value="Id: "/><p:outputLabel class="formDemitidoValor" value="#{operadorMB.operadorView.id}" />
+           <h:outputLabel class="formDemitido" value="Apelido: "/><p:outputLabel class="formDemitidoValor" value="#{operadorMB.operadorView.apelido}"/>
+           <h:panelGroup>
+           <h:outputLabel class="formDemitido" value="Nome: "/><p:outputLabel class="formDemitidoValor"  value="#{operadorMB.operadorView.nome}"/>
+           </h:panelGroup>
+           <h:outputLabel class="formDemitido" value="Dt.Nascimento:"/><p:outputLabel class="formDemitidoValor"  value="#{operadorMB.operadorView.dtNasc}">
+               <f:convertDateTime locale="pt" dateStyle="long" pattern="dd/MM/yyyy" /></p:outputLabel>
+           <h:outputLabel class="formDemitido" value="Sexo: "/><p:outputLabel class="formDemitidoValor"  value="#{operadorMB.operadorView.sexo}"/>
+           <h:outputLabel class="formDemitido" value="E-mail: "/><p:outputLabel class="formDemitidoValor"  value="#{operadorMB.operadorView.email}"/>
+           <h:outputLabel class="formDemitido" value="Função: "/><p:outputLabel class="formDemitidoValor"  value="#{operadorMB.operadorView.funcao}"/>
+           <h:outputLabel class="formDemitido" value="Nível Acesso: "/><p:outputLabel class="formDemitidoValor"  value="#{operadorMB.operadorView.nivel}"/>
+                      <h:outputLabel class="formDemitido" value="Dt. Admissão: "/><p:outputLabel class="formDemitidoValor"  value="#{operadorMB.operadorView.dtAdmissao}">
+               <f:convertDateTime locale="pt" dateStyle="long" pattern="dd/MM/yyyy" /></p:outputLabel>
+           <h:outputLabel class="formDemitido" value="Dt. Demissão: "/><p:outputLabel class="formDemitidoValor"  value="#{operadorMB.operadorView.dtDesativacao}">
+               <f:convertDateTime locale="pt" dateStyle="long" pattern="dd/MM/yyyy" /></p:outputLabel>
+           <h:outputLabel class="formDemitido" value="Nº Acessos: "/><p:outputLabel class="formDemitidoValor"  value="#{operadorMB.operadorView.nrAcessos}"/>
+           <h:outputLabel class="formDemitido" value="Último Acesso: "/><p:outputLabel class="formDemitidoValor"  value="#{operadorMB.operadorView.dtUltAcesso}">
+               <f:convertDateTime locale="pt" dateStyle="long" pattern="dd/MM/yyyy  HH:mm" /></p:outputLabel>
+                 </p:panelGrid>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

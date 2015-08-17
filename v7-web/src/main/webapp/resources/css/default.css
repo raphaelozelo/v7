@@ -1,0 +1,172 @@
+body {
+    background-color: #ffffff;
+    /* font-size: 12px; */
+    font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    color: #000000;  
+    /* margin: 10px; */
+}
+
+container {
+    width: 960px;
+    height: 2040px;   
+     margin: 0 auto;
+     font-size: 8px;
+}
+#top {
+    position: relative;
+    background-color: #036fab;
+    color: white;
+    padding: 3px;
+    margin: 0 auto;
+    height: 70px;
+    margin-bottom: 5px;
+    
+}
+
+#areaconteudo{
+    position: relative;
+    margin: auto;
+ 
+}
+h1 {
+    font-family: Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    border-bottom: 1px solid #AFAFAF; 
+    font-size:  16px;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+    color: #D20005;
+}
+
+a:link, a:visited {
+  color: #045491;
+  font-weight : bold;
+  text-decoration: none;
+}
+
+a:link:hover, a:visited:hover  {
+  color: #045491;
+  font-weight : bold;
+  text-decoration : underline;
+}
+
+.ui-Widget ,  .ui-Widget .ui-Widget { 
+    font-size :  12px; 
+}
+
+.primeGrid tr, .primeGrid td {  
+    border: none !important;  
+}
+.primeGrid {
+    border-left: solid black 1px;
+    border-right: solid black 1px;
+    border-bottom: solid black 1px;
+    border-top: solid black 1px;
+}
+
+ .formFooter{
+     margin-top: 5px;
+    margin-left: auto;
+    margin-right: auto;     
+ }
+ 
+ .formDemitidoValor{
+     font-size: large;
+     font-weight: bolder;
+ }
+ 
+.logoDiv{
+    width: 15%;
+    float: left;
+     
+}
+.menuDiv {
+    width: 60%;   
+}
+
+.labelBorder{
+    font-weight: bolder;
+}
+
+.labelOpcionais {
+    background-color: lightgrey;
+    font-size: small;    
+    width: 500px;
+}
+.labelOpcionais.tr{
+    height: 10px;
+ }
+.lOpcColumn1, .lOpcColumn2 {
+    width: 50%;
+    padding-left: 2px;
+}
+
+.rowDT{
+    font-size: 12px;
+}
+.operadorMenuText{
+    margin-left: 2px;
+    font-size: small;
+    text-transform: capitalize;
+}
+.operadorMenuGrid {
+    background: darkgray;
+    border: #000000 1px;
+    width:330px;
+    height:288px;
+}
+
+.operadorMenuGroup{
+    margin: auto;
+}
+
+.operadorMenuLink {
+ padding: 10px;
+ margin: auto;
+}
+
+.operadorMenuLink:hover {
+   background-color: #C2C2C2;
+     box-shadow:
+        4px 4px 2px  rgba(255,255,255,.1) inset,
+        4px 4px 2px  rgba(255,255,255,.2);  
+}
+.operadorSair{
+    margin-left: 30px;
+    color: #CB0707;
+    text-shadow: 2px 2px  rgba(255,255,255,.1); 
+}
+.operadorSair:hover{
+    color: #F80707;
+    text-shadow: 5px 5px  rgba(0,0,0,.1);   
+}
+
+.buttonRedondo  {
+    cursor: pointer;
+    margin: 5px 10px 5px 10px;
+    height: 36px;
+    background: black;
+    -moz-border-radius: 18px;
+    -webkit-border-radius: 18px;
+    border-radius: 18px;
+ }
+
+.buttonRedondo:hover {
+    background: blue;
+   }
+
+.buttonRedondoRed:hover {
+    background: red;
+}
+
+.lembreteGrid {
+ width: 880px;
+ background-color: #C2C2C2;   
+    
+}
+
+.lembrete:hover{
+    cursor: pointer;
+    box-shadow: 2px 2px 2px 2px #F80707;
+    border: #F80707 solid 1px
+}
